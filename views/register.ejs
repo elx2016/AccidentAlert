@@ -6,11 +6,17 @@
     <h1>Sign Up</h1>
     <form action="" method="POST">
         <label for="user_name">Name</label>
-        <input type="text" class="input" name="_name" autocomplete="off" id="user_name" placeholder="Enter your name">
+        <input type="text" class="input" name="_name" autocomplete="on" id="user_name" placeholder="Enter your name">
         <label for="user_email">Email</label>
-        <input type="email" class="input" name="_email" autocomplete="off" id="user_email" placeholder="Enter your email">
+        <input type="email" class="input" name="_email" autocomplete="on" id="user_email" placeholder="Enter your email">
+        <label for="user_number">Mobile Number</label>
+        <input type="number" class="input" name="_number" id="user_number" placeholder="Enter new Mobile Number">
+
+        <label for="user_vehicleID">Vehicle ID</label>
+        <input type="text" class="input" name="_vehicle_id" id="user_vehicleID" placeholder="Enter vehicle ID">
+
         <label for="user_pass">Password</label>
-        <input type="password" class="input" name="_password" id="user_pass" placeholder="Enter new password">
+        <input type="password" class="input" name="_password" id="user_pass" placeholder="Enter password">
         <% if(typeof msg != 'undefined'){ %>
         <div class="success-msg"><%= msg %></div><% }
         if(typeof error !== 'undefined'){ %>

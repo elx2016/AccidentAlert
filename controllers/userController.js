@@ -4,7 +4,7 @@ const dbConnection = require("../utils/dbConnection");
 
 // Home Page
 exports.homePage = async (req, res, next) => {
-    const [row] = await dbConnection.execute("SELECT * FROM `users` WHERE `id`=?", [req.session.userID]);
+    const [row] = await dbConnection.execute("SELECT * FROM `user_profile` WHERE `id`=?", [req.session.userID]);
 
     if (row.length !== 1) {
         return res.redirect('/logout');
@@ -34,7 +34,7 @@ exports.register = async (req, res, next) => {
     try {
 
         const [row] = await dbConnection.execute(
-            "SELECT * FROM `users` WHERE `email`=?",
+            "SELECT * FROM `user_profile` WHERE `email`=?",
             [body._email]
         );
 
@@ -43,12 +43,44 @@ exports.register = async (req, res, next) => {
                 error: 'This email already in use.'
             });
         }
+    
+
+
+    // try {
+
+    //     const [row] = await dbConnection.execute(
+    //         "SELECT * FROM `user` WHERE `phone`=?",
+    //         [body._number]
+    //     );
+
+    //     if (row.length == 10) {
+    //         return res.render('register', {
+    //             error: 'Enter proper mobile number.'
+    //         });
+    //     }
+    // }   catch(error) {
+    //     console.log(error)
+    // }
+    
+
+        //     try {
+
+        // const [row] = await dbConnection.execute(
+        //     "SELECT * FROM `user` WHERE `vehicle_id`=?",
+        //     [body._vehicle_id]
+        // );
+
+        // if (row.length == 5) {
+        //     return res.render('register', {
+        //         error: 'Enter proper vehicle number.'
+        //     });
+        // }
 
         const hashPass = await bcrypt.hash(body._password, 12);
 
         const [rows] = await dbConnection.execute(
-            "INSERT INTO `users`(`name`,`email`,`password`) VALUES(?,?,?)",
-            [body._name, body._email, hashPass]
+            "INSERT INTO `user_profile`(`name`,`vehicle_id`,`phone`,`password`,`email`) VALUES(?,?,?,?,?)",
+            [body._name,body._vehicle_id,body._number, hashPass, body._email,  ]
         );
 
         if (rows.affectedRows !== 1) {
@@ -56,7 +88,7 @@ exports.register = async (req, res, next) => {
                 error: 'Your registration has failed.'
             });
         }
-        
+
         res.render("register", {
             msg: 'You have successfully registered.'
         });
@@ -65,6 +97,8 @@ exports.register = async (req, res, next) => {
         next(e);
     }
 };
+
+
 
 // Login Page
 exports.loginPage = (req, res, next) => {
@@ -85,7 +119,7 @@ exports.login = async (req, res, next) => {
 
     try {
 
-        const [row] = await dbConnection.execute('SELECT * FROM `users` WHERE `email`=?', [body._email]);
+        const [row] = await dbConnection.execute('SELECT * FROM `user` WHERE `email`=?', [body._email]);
 
         if (row.length != 1) {
             return res.render('login', {
@@ -111,3 +145,4 @@ exports.login = async (req, res, next) => {
     }
 
 }
+    

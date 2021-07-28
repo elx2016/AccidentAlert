@@ -34,6 +34,11 @@ ifLoggedin,
             .escape()
             .trim()
             .isEmail(),
+        body("_number", "Invalid Phone Number")
+            .notEmpty()
+            .escape()
+            .trim(),
+            
         body("_password", "The Password must be of minimum 4 characters length")
             .notEmpty()
             .trim()
@@ -57,6 +62,13 @@ router.post(
             .escape()
             .trim()
             .isEmail(),
+        // body("_number", "Invalid mobile number")
+        //     .notEmpty()
+           
+        //     ,
+        // body("_vehicle_id", "Invalid vehicle_id")
+        //     .notEmpty(),
+            
         body("_password", "The Password must be of minimum 4 characters length")
             .notEmpty()
             .trim()
